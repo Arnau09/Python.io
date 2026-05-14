@@ -1,0 +1,69 @@
+#Joc supermercat
+
+
+
+def mostrar_menu():
+    print("****Menu****")
+    print("1. -Afegir producte.")
+    print("2. -Eliminar productes")
+    print("3. -Modificar productes")
+    print("4. -Llistar productes")
+    print("5. -Mostrar quants productes diferents té el supermercat")
+    print("6. -Sortir del programa")
+    print("***********************")
+    try:
+        opcio = int(input("Selecciona l'opcio: "))
+    except:
+        opcio = 0
+    return opcio
+
+alumnes = []
+
+def afegir_producte():
+    nom = input("Posa el nom del producte: ")
+    alumnes.append(nom)
+    print(f"Producte '{nom}' afegit correctament!")
+
+def llistar_productes():
+    if not alumnes:
+        print("No hi ha productes al supermercat.")
+        return
+    comptador = {}
+    for p in alumnes:
+        comptador[p] = comptador.get(p, 0) + 1
+    print("\nLlista de productes amb quantitats:")
+    for nom, quantitat in comptador.items():
+        if quantitat == 1:
+            print(f"{nom}: 1 producte")
+        else:
+            print(f"{nom}: {quantitat} productes")
+
+def mostrar_quants_diferents():
+    diferents = len(set(alumnes))
+    print(f"Hi ha {diferents} productes diferents al supermercat.")
+
+while True:
+    opcio = mostrar_menu()
+    if opcio == 1:
+        afegir_producte()
+    elif opcio == 2:
+        nom = input("Posa el producte que vols eliminar: ")
+        alumnes = [p for p in alumnes if p != nom]
+        print(f"Producte '{nom}' eliminat.")
+    elif opcio == 3:
+        nom_vell = input("Posa el producte que vols modificar: ")
+        if nom_vell in alumnes:
+            nom_nou = input("Posa el nou nom del producte: ")
+            alumnes = [nom_nou if p == nom_vell else p for p in alumnes]
+            print(f"Producte '{nom_vell}' modificat per '{nom_nou}'.")
+        else:
+            print(f"Producte '{nom_vell}' no trobat.")
+    elif opcio == 4:
+        llistar_productes()
+    elif opcio == 5:
+        mostrar_quants_diferents()
+    elif opcio == 6:
+        print("Surt del programa")
+        break
+    else:
+        print("L’opció seleccionada no és correcta. Intenta-ho de nou")
